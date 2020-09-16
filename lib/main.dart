@@ -23,11 +23,11 @@ class MyAppState extends State<MyApp> {
     },
     {
       'questionText': "Third question: ",
-      'answerText': ['Me', 'Myself', 'I', 'No one']
+      'answerText': ['1', '2', '3', '4']
     },
     {
       'questionText': "What;s next",
-      'answerText': ['Me', 'Myself', 'I', 'No one']
+      'answerText': ['4', '5', '6', '7']
     },
   ];
 
