@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/answer.dart';
-import './question.dart';
+import 'result.dart';
+import './quiz.dart';
 
 void main() => runApp(MyApp());
 
@@ -15,50 +15,68 @@ class MyAppState extends State<MyApp> {
   var questions = [
     {
       'questionText': "Quat\'s your favourite animal?",
-      'answerText': ['Cat', 'Dog', 'Lion', 'Elephant']
+      'answerText': [
+        {'text': 'Cat', 'score': 1},
+        {'text': 'Dog', 'score': 1},
+        {'text': 'Lion', 'score': 1},
+        {'text': 'Elephanr', 'score': 4},
+      ]
     },
     {
       'questionText': "Quat\'s your favorite peple?",
-      'answerText': ['Me', 'Myself', 'I', 'No one']
+      'answerText': [
+        {'text': 'Me', 'score': 1},
+        {'text': 'Myself', 'score': 1},
+        {'text': 'I', 'score': 1},
+        {'text': 'Elephant', 'score': 4},
+      ]
     },
     {
       'questionText': "Third question: ",
-      'answerText': ['1', '2', '3', '4']
+      'answerText': [
+        {'text': '1', 'score': 1},
+        {'text': '2', 'score': 1},
+        {'text': '3', 'score': 1},
+        {'text': '4', 'score': 4},
+      ]
     },
     {
       'questionText': "What;s next",
-      'answerText': ['4', '5', '6', '7']
+      'answerText': [
+        {'text': '4', 'score': 1},
+        {'text': '5', 'score': 1},
+        {'text': '6', 'score': 1},
+        {'text': '7', 'score': 4},
+      ]
     },
   ];
 
-  var questionIndex = 0;
+  var _questionIndex = 0;
+  var _totalScore = 0;
 
-  void buttonClicked() {
+  void _buttonClicked(int score) {
     setState(() {
-      questionIndex =
-          questionIndex == questions.length - 1 ? 0 : questionIndex + 1;
+      _questionIndex = _questionIndex + 1;
+      _totalScore += score;
     });
     print("button clicked");
-    print("quesion index is: " + questionIndex.toString());
+    print("quesion index is: " + _questionIndex.toString());
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         home: Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black87,
-        title: Text("Quizaaa"),
-      ),
-      body: Column(
-        children: [
-          Question(questions[questionIndex]['questionText']),
-          ...(questions[questionIndex]['answerText'] as List<String>)
-              .map((answer) {
-            return Answer(buttonClicked, answer);
-          })
-        ],
-      ),
-    ));
+            appBar: AppBar(
+              backgroundColor: Colors.black87,
+              title: Text("Quizaaa"),
+            ),
+            body: _questionIndex < questions.length
+                ? Quiz(
+                    buttonClicked: _buttonClicked,
+                    questionIndex: _questionIndex,
+                    questions: questions,
+                  )
+                : Result(_totalScore)));
   }
 }
